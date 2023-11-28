@@ -1,0 +1,5 @@
+﻿  chessEngineFromScratch.cpp
+C:\Users\User\source\repos\chessEngineFromScratch\chessEngineFromScratch\Bitboards.h(30,1): warning C4554: "<<": проверьте приоритет операторов на ошибки; для уточнения приоритета используйте скобки
+C:\Users\User\source\repos\chessEngineFromScratch\chessEngineFromScratch\Bitboards.h(31,1): warning C4554: "<<": проверьте приоритет операторов на ошибки; для уточнения приоритета используйте скобки
+C:\Users\User\source\repos\chessEngineFromScratch\chessEngineFromScratch\Bitboards.h(76,28): warning C4834: отмена возвращаемого значения функции с атрибутом "nodiscard"
+  chessEngineFromScratch.vcxproj -> C:\Users\User\source\repos\chessEngineFromScratch\x64\Debug\chessEngineFromScratch.exe
