@@ -1,9 +1,8 @@
 ﻿#include <iostream>
-#include <bitset>
 #include "Bitboards.h"
+#include "BitboardOperations.h"
 
 int main()
 {
-    Chessboard chessboard = Chessboard();
-    chessboard.toBoard(chessboard.blackKing);
+    
 }

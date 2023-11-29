@@ -1,79 +1,88 @@
-#pragma once
 #include <bit>
-#define ZERO 0b00000000;
-typedef uint64_t Bitboard;
+#include <string>
 
+#pragma once
+
+typedef uint64_t Bitboard;
 
 class Chessboard {
 public:
-	Bitboard chessboard = ZERO;
+	Bitboard chessboard;
+	Bitboard emptyBoard;
 
-	Bitboard whitePieces = ZERO;
-	Bitboard blackPieces = ZERO;
+	Bitboard whitePieces;
+	Bitboard blackPieces;
 
-	Bitboard whitePawns = ZERO;
-	Bitboard whiteKnights = ZERO;
-	Bitboard whiteBishops = ZERO;
-	Bitboard whiteRooks = ZERO;
-	Bitboard whiteQueen = ZERO;
-	Bitboard whiteKing = ZERO;
+	Bitboard whitePawns;
+	Bitboard whiteKnights;
+	Bitboard whiteBishops;
+	Bitboard whiteRooks;
+	Bitboard whiteQueen;
+	Bitboard whiteKing;
 
-	Bitboard blackPawns = ZERO;
-	Bitboard blackKnights = ZERO;
-	Bitboard blackBishops = ZERO;
-	Bitboard blackRooks = ZERO;
-	Bitboard blackQueen = ZERO;
-	Bitboard blackKing = ZERO;
+	Bitboard blackPawns;
+	Bitboard blackKnights;
+	Bitboard blackBishops;
+	Bitboard blackRooks;
+	Bitboard blackQueen;
+	Bitboard blackKing;
 
-	Chessboard() {
-		for (int i = 0; i < 8; ++i) {
-			whitePawns = whitePawns | (1ULL << 8 + i);
-			blackPawns = blackPawns | (1ULL << 48 + i);
-		}
-		whiteKnights = whiteKnights | (1ULL << 1);
-		whiteKnights = whiteKnights | (1ULL << 6);
-		whiteBishops = whiteBishops | (1ULL << 2);
-		whiteBishops = whiteBishops | (1ULL << 5);
-		whiteRooks = whiteRooks | (1ULL << 0);
-		whiteRooks = whiteRooks | (1ULL << 7);
-		whiteQueen = whiteQueen | (1ULL << 4);
-		whiteKing = whiteKing | (1ULL << 3);
-		blackKnights = blackKnights | (1ULL << 62);
-		blackKnights = blackKnights | (1ULL << 57);
-		blackBishops = blackBishops | (1ULL << 58);
-		blackBishops = blackBishops | (1ULL << 61);
-		blackRooks = blackRooks | (1ULL << 56);
-		blackRooks = blackRooks | (1ULL << 63);
-		blackQueen = blackQueen | (1ULL << 60);
-		blackKing = blackKing | (1ULL << 59);
-		whitePieces = whitePawns | whiteKing | whiteQueen | whiteRooks | whiteBishops | whiteKnights;
-		blackPieces = blackPawns | blackKing | blackQueen | blackRooks | blackBishops | blackKnights;
-		chessboard = whitePieces | blackPieces;
+	Chessboard() = default;
+
+	void updateBitboards() {
+		this->whitePieces = this->whitePawns |
+			this->whiteKnights |
+			this->whiteBishops |
+			this->whiteRooks |
+			this->whiteQueen |
+			this->whiteKing;
+
+		this->blackPieces = this->blackPawns |
+			this->whiteKnights |
+			this->whiteBishops |
+			this->whiteRooks |
+			this->whiteQueen |
+			this->whiteKing;
+		this->chessboard = this->blackPieces | this->whitePieces;
+		this->emptyBoard = ~this->chessboard;
 	}
 
-	static constexpr void set_1(Bitboard& bb, uint8_t square) {
-		bb = bb | (1ULL << square);
-	}
-	static constexpr void set_0(Bitboard& bb, uint8_t square) {
-		bb = bb & (~(1ULL << square));
-	}
-
-	static constexpr bool get_bit(Bitboard bb, uint8_t square) {
-		return (bb & (1ULL << square));
-	}
-
-	static constexpr uint8_t count_1(Bitboard bb) {
-		return std::popcount(bb);
-	}
-
-	void toBoard(Bitboard bitboard) {
-		for (int i = 63; i >= 0; --i) {
-			std::cout << ((bitboard >> i) & 1) << " ";
-			if (i % 8 == 0) {
-				std::cout << std::endl;
+	void setPiecesFEN(const std::string& fenNotation) {
+		uint8_t x = 0;
+		uint8_t y = 7;
+		for (auto character : fenNotation) {
+			if (character == '/') {
+				x = 0;
+				y = y - 1;
+			}
+			else if (std::isdigit(character)) {
+				x = x + character - '0';
+			}
+			else {
+				if (std::isupper(character)) {
+					character = std::tolower(character);
+					switch (character) {
+					case 'p': BitboardOperations::set_1(this->whitePawns, y * 8 + x); break;
+					case 'n': BitboardOperations::set_1(this->whiteKnights, y * 8 + x); break;
+					case 'b': BitboardOperations::set_1(this->whiteBishops, y * 8 + x); break;
+					case 'r': BitboardOperations::set_1(this->whiteRooks, y * 8 + x); break;
+					case 'q': BitboardOperations::set_1(this->whiteQueen, y * 8 + x); break;
+					case 'k': BitboardOperations::set_1(this->whiteKing, y * 8 + x); break;
+					}
+				}
+				else {
+					switch (character) {
+					case 'p': BitboardOperations::set_1(this->blackPawns, y * 8 + x); break;
+					case 'n': BitboardOperations::set_1(this->blackKnights, y * 8 + x); break;
+					case 'b': BitboardOperations::set_1(this->blackBishops, y * 8 + x); break;
+					case 'r': BitboardOperations::set_1(this->blackRooks, y * 8 + x); break;
+					case 'q': BitboardOperations::set_1(this->blackQueen, y * 8 + x); break;
+					case 'k': BitboardOperations::set_1(this->blackKing, y * 8 + x); break;
+					}
+				}
+				x = x + 1;
 			}
 		}
-		std::bitset<64>(bitboard).to_string();
+		this->updateBitboards();
 	}
-
 };
