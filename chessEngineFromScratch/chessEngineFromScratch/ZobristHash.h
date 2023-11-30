@@ -14,14 +14,6 @@ private:
 public:
     ZobristHash() = default;
 
-    void addPosition(ZobristHash hash);
-    
-    void clear();
-
-    uint8_t getRepetitionNumber(ZobristHash hash) const;
-
-    ZobristHash() = default;
-
     ZobristHash(Chessboard chessboard, bool blackTurn, bool whiteShortSideCastle, bool whiteLongSideCastle, bool blackShortSideCastling, bool blackLongSideCastling) {
         this->value = 0;
 
@@ -60,9 +52,15 @@ public:
             }
         }
     }
-    static bool operator ==(ZobristHash left, ZobristHash right) {
+
+    friend bool operator==(ZobristHash left, ZobristHash right) {
         return (left.value == right.value);
     }
+
+    friend bool operator<(ZobristHash left, ZobristHash right) {
+        return (left.value < right.value);
+    }
+
     void invertPiece(uint8_t tile, uint8_t type, uint8_t side) {
         this->value = this->value ^ ZobristHashConstants::CONSTANTS[tile][side][type];
     }

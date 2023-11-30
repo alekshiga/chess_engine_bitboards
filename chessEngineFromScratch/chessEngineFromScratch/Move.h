@@ -1,6 +1,5 @@
 #pragma once
 
-
 class Move {
     
     int startPosition;
@@ -14,7 +13,7 @@ class Move {
 
     int flag;
     
-    Move();
+    Move() = default;
     
     Move(int startPosition,
         int destinationCoordinate,
@@ -22,24 +21,87 @@ class Move {
         int attackingPieceAlliance,
         int attackedPieceType,
         int attackedPieceAlliance,
-        int flag = Flag::regular);
+        int flag) 
+    {
+        this->startPosition = startPosition;
+        this->destinationCoordinate = destinationCoordinate;
+        this->attackingPieceType = attackingPieceType;
+        this->attackingPieceAlliance = attackingPieceAlliance;
+        this->attackedPieceType = attackedPieceType;
+        this->attackedPieceAlliance = attackedPieceAlliance;
+        this->flag = flag;
+    }
 
-    friend bool operator==(Move left, Move right);
-};
+    friend bool operator==(Move left, Move right) {
 
-namespace Flag {
-    static constexpr int regular = 0;
+    }
 
-    static constexpr int pawnJump = 1;
-    static constexpr int enPassantMove = 2;
-    static constexpr int whiteShortCastling = 3;
-    static constexpr int whiteLongSideCastle = 4;
+    int getStartPosition() const {
+        return this->startPosition;
+    }
 
-    static constexpr int blackShortSideCastle = 5;
-    static constexpr int blackLongSideCastle = 6;
+    int getDestinationCoordinate() const {
+        return this->destinationCoordinate;
+    }
 
-    static constexpr int promotionToKnight = 7;
-    static constexpr int promotionToBishop = 8;
-    static constexpr int promotionToRook = 9;
-    static constexpr int promotionToQueen = 10;
+    int getAttackingPieceType() const {
+        return this->attackingPieceType;
+    }
+
+    int getAttackingPieceAlliance() const {
+        return this->attackingPieceAlliance;
+    }
+
+    int getAttackedPieceType() const {
+        return this->attackedPieceType;
+    }
+
+    int getAttackedPieceAlliance() const {
+        return this->attackedPieceAlliance;
+    }
+
+    void setStartPosition(int startPosition) {
+        this->startPosition = startPosition;
+    }
+
+    void setDestinationCoordinate(int destinationCoordinate) {
+        this->destinationCoordinate = destinationCoordinate;
+    }
+
+    void setAttackingPieceType(int attackingPieceType) {
+        this->attackingPieceType = attackingPieceType;
+    }
+
+    void setAttackingPieceAlliance(int attackingPieceAlliance) {
+        this->attackingPieceAlliance = attackingPieceAlliance;
+    }
+
+    void setAttackedPieceType(int attackedPieceType) {
+        this->attackedPieceType = attackedPieceType;
+    }
+
+    void setAttackedPieceAlliance(int attackedPieceAlliance) {
+        this->attackedPieceAlliance = attackedPieceAlliance;
+    }
+
+    void setFlag(int flag) {
+        this->flag = flag;
+    }
+
+    enum Flag {
+        regular,
+
+        pawnJump,
+        enPassantMove,
+        whiteShortCastling,
+        whiteLongSideCastle,
+
+        blackShortSideCastle,
+        blackLongSideCastle,
+
+        promotionToKnight,
+        promotionToBishop,
+        promotionToRook,
+        promotionToQueen
+    };
 };
