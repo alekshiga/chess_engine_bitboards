@@ -9,11 +9,13 @@ typedef uint64_t Bitboard;
 
 namespace BitboardOperations {
 
-	static constexpr void set_1(Bitboard& bb, uint8_t square) {
-		bb = bb | (1ULL << square);
+	static constexpr Bitboard set1(Bitboard bb, uint8_t square) {
+		bb = bb | (1ull << square);
+		return bb;
 	}
-	static constexpr void set_0(Bitboard& bb, uint8_t square) {
-		bb = bb & (~(1ULL << square));
+	static constexpr Bitboard set0(Bitboard bb, uint8_t square) {
+		bb = bb & (~(1ull << square));
+		return bb;
 	}
 
 	static constexpr bool get_bit(Bitboard bb, uint8_t square) {
@@ -67,7 +69,7 @@ namespace BitboardRows {
 	static consteval std::array<Bitboard, 8> calculateRows() {
 		std::array<Bitboard, 8> rows{};
 		for (uint8_t y = 0; y < 8; y = y + 1) {
-			for (uint8_t x = 0; x < 8; x = x + 1) BitboardOperations::set_1(rows[y], y * 8 + x);
+			for (uint8_t x = 0; x < 8; x = x + 1) BitboardOperations::set1(rows[y], y * 8 + x);
 		} return rows;
 	}
 
@@ -88,7 +90,7 @@ namespace BitboardColumns {
 	static consteval std::array<Bitboard, 8> calculateColumns() {
 		std::array<Bitboard, 8> columns{};
 		for (uint8_t x = 0; x < 8; x = x + 1) {
-			for (uint8_t y = 0; y < 8; y = y + 1) BitboardOperations::set_1(columns[x], y * 8 + x);
+			for (uint8_t y = 0; y < 8; y = y + 1) BitboardOperations::set1(columns[x], y * 8 + x);
 		} return columns;
 	}
 

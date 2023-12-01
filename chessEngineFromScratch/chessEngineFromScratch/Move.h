@@ -1,90 +1,62 @@
 #pragma once
 
 class Move {
-    
-    int startPosition;
-    int destinationCoordinate;
+public:
+    uint8_t startPosition;
+    uint8_t destinationCoordinate;
 
-    int attackingPieceType;
-    int attackingPieceAlliance;
+    uint8_t attackerPieceType;
+    uint8_t attackerPieceAlliance;
 
-    int attackedPieceType;
-    int attackedPieceAlliance;
+    uint8_t attackedPieceType;
+    uint8_t attackedPieceAlliance;
 
-    int flag;
+    uint8_t flag;
     
     Move() = default;
     
-    Move(int startPosition,
-        int destinationCoordinate,
-        int attackingPieceType,
-        int attackingPieceAlliance,
-        int attackedPieceType,
-        int attackedPieceAlliance,
-        int flag) 
+    Move(uint8_t startPosition,
+        uint8_t destinationCoordinate,
+        uint8_t attackingPieceType,
+        uint8_t attackingPieceAlliance,
+        uint8_t attackedPieceType,
+        uint8_t attackedPieceAlliance,
+        uint8_t flag) 
     {
         this->startPosition = startPosition;
         this->destinationCoordinate = destinationCoordinate;
-        this->attackingPieceType = attackingPieceType;
-        this->attackingPieceAlliance = attackingPieceAlliance;
+        this->attackerPieceType = attackingPieceType;
+        this->attackerPieceAlliance = attackingPieceAlliance;
         this->attackedPieceType = attackedPieceType;
         this->attackedPieceAlliance = attackedPieceAlliance;
         this->flag = flag;
     }
 
-    friend bool operator==(Move left, Move right) {
-
-    }
-
-    int getStartPosition() const {
-        return this->startPosition;
-    }
-
-    int getDestinationCoordinate() const {
-        return this->destinationCoordinate;
-    }
-
-    int getAttackingPieceType() const {
-        return this->attackingPieceType;
-    }
-
-    int getAttackingPieceAlliance() const {
-        return this->attackingPieceAlliance;
-    }
-
-    int getAttackedPieceType() const {
-        return this->attackedPieceType;
-    }
-
-    int getAttackedPieceAlliance() const {
-        return this->attackedPieceAlliance;
-    }
-
-    void setStartPosition(int startPosition) {
+    void setStartPosition(uint8_t startPosition) {
         this->startPosition = startPosition;
     }
 
-    void setDestinationCoordinate(int destinationCoordinate) {
+    void setDestinationCoordinate(uint8_t destinationCoordinate) {
         this->destinationCoordinate = destinationCoordinate;
     }
 
-    void setAttackingPieceType(int attackingPieceType) {
-        this->attackingPieceType = attackingPieceType;
+    void setAttackingPieceType(uint8_t attackingPieceType) {
+        this->attackerPieceType = attackingPieceType;
     }
 
-    void setAttackingPieceAlliance(int attackingPieceAlliance) {
-        this->attackingPieceAlliance = attackingPieceAlliance;
+    void setAttackingPieceAlliance(uint8_t attackingPieceAlliance) {
+        this->attackerPieceAlliance = attackingPieceAlliance;
     }
 
-    void setAttackedPieceType(int attackedPieceType) {
+    void setAttackedPieceType(uint8_t attackedPieceType) {
         this->attackedPieceType = attackedPieceType;
     }
 
-    void setAttackedPieceAlliance(int attackedPieceAlliance) {
+    void setAttackedPieceAlliance(uint8_t attackedPieceAlliance) {
         this->attackedPieceAlliance = attackedPieceAlliance;
     }
 
-    void setFlag(int flag) {
+    void setFlag(uint8_t flag) {
         this->flag = flag;
     }
 
@@ -93,15 +65,18 @@ class Move {
 
         pawnJump,
         enPassantMove,
-        whiteShortCastling,
-        whiteLongSideCastle,
 
-        blackShortSideCastle,
-        blackLongSideCastle,
+        whiteShortCastling,
+        whiteLongCastling,
+
+        blackShortCastling,
+        blackLongCastling,
 
         promotionToKnight,
         promotionToBishop,
         promotionToRook,
         promotionToQueen
     };
+
+    static constexpr uint8_t NONE = 255;
 };

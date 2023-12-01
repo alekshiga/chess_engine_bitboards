@@ -6,14 +6,15 @@
 class RepetitionHistory {
 private:
     std::vector<ZobristHash> hashes;
-
 public:
+    RepetitionHistory() = default;
+
     RepetitionHistory(ZobristHash hash) {
         this->hashes.push_back(hash);
     }
 
-    void addPosition() {
-        this->hashes.clear();
+    void addPosition(ZobristHash hash) {
+        this->hashes.push_back(hash);
     }
 
     void clear() {

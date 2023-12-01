@@ -25,7 +25,7 @@ enum SIDE {
 
 
 class Chessboard {
-private:
+public:
 
 	std::array<std::array<Bitboard, 6>, 2> pieceBitboards{};
 	std::array<Bitboard, 2> sideBitboards{};
@@ -33,9 +33,8 @@ private:
 	Bitboard chessBoard;
 	Bitboard emptyBoard;
 
-public:
+	Chessboard() = default;
 
-	Chessboard();
 	Chessboard(const std::string& fenNotation) {
 		uint8_t x = 7;
 		uint8_t y = 7;
@@ -61,22 +60,22 @@ public:
 
 				switch (character) {
 				case 'p':
-					BitboardOperations::set_1(this->pieceBitboards[side][PIECE::PAWN], y * 8 + x);
+					BitboardOperations::set1(this->pieceBitboards[side][PIECE::PAWN], y * 8 + x);
 					break;
 				case 'n':
-					BitboardOperations::set_1(this->pieceBitboards[side][PIECE::KNIGHT], y * 8 + x);
+					BitboardOperations::set1(this->pieceBitboards[side][PIECE::KNIGHT], y * 8 + x);
 					break;
 				case 'b':
-					BitboardOperations::set_1(this->pieceBitboards[side][PIECE::BISHOP], y * 8 + x);
+					BitboardOperations::set1(this->pieceBitboards[side][PIECE::BISHOP], y * 8 + x);
 					break;
 				case 'r':
-					BitboardOperations::set_1(this->pieceBitboards[side][PIECE::ROOK], y * 8 + x);
+					BitboardOperations::set1(this->pieceBitboards[side][PIECE::ROOK], y * 8 + x);
 					break;
 				case 'q':
-					BitboardOperations::set_1(this->pieceBitboards[side][PIECE::QUEEN], y * 8 + x);
+					BitboardOperations::set1(this->pieceBitboards[side][PIECE::QUEEN], y * 8 + x);
 					break;
 				case 'k':
-					BitboardOperations::set_1(this->pieceBitboards[side][PIECE::KING], y * 8 + x);
+					BitboardOperations::set1(this->pieceBitboards[side][PIECE::KING], y * 8 + x);
 					break;
 				}
 
@@ -87,45 +86,45 @@ public:
 		this->updateBitboards();
 	}
 
-	friend std::string toString(Chessboard pieces) {
+	std::string toString() {
 		std::string result;
 		for (int8_t y = 7; y >= 0; y = y - 1) {
 			for (uint8_t x = 0; x < 8; x = x + 1) {
 				uint8_t index = y * 8 + x;
-				if (BitboardOperations::get_bit(pieces.pieceBitboards[SIDE::WHITE][PIECE::PAWN], index)) {
+				if (BitboardOperations::get_bit(this->pieceBitboards[SIDE::WHITE][PIECE::PAWN], index)) {
 					result += "P ";
 				}
-				else if (BitboardOperations::get_bit(pieces.pieceBitboards[SIDE::WHITE][PIECE::KNIGHT], index)) {
+				else if (BitboardOperations::get_bit(this->pieceBitboards[SIDE::WHITE][PIECE::KNIGHT], index)) {
 					result += "K ";
 				}
-				else if (BitboardOperations::get_bit(pieces.pieceBitboards[SIDE::WHITE][PIECE::BISHOP], index)) {
+				else if (BitboardOperations::get_bit(this->pieceBitboards[SIDE::WHITE][PIECE::BISHOP], index)) {
 					result += "B ";
 				}
-				else if (BitboardOperations::get_bit(pieces.pieceBitboards[SIDE::WHITE][PIECE::ROOK], index)) {
+				else if (BitboardOperations::get_bit(this->pieceBitboards[SIDE::WHITE][PIECE::ROOK], index)) {
 					result += "R ";
 				}
-				else if (BitboardOperations::get_bit(pieces.pieceBitboards[SIDE::WHITE][PIECE::QUEEN], index)) {
+				else if (BitboardOperations::get_bit(this->pieceBitboards[SIDE::WHITE][PIECE::QUEEN], index)) {
 					result += "Q ";
 				}
-				else if (BitboardOperations::get_bit(pieces.pieceBitboards[SIDE::WHITE][PIECE::KING], index)) {
+				else if (BitboardOperations::get_bit(this->pieceBitboards[SIDE::WHITE][PIECE::KING], index)) {
 					result += "K ";
 				}
-				else if (BitboardOperations::get_bit(pieces.pieceBitboards[SIDE::BLACK][PIECE::PAWN], index)) {
+				else if (BitboardOperations::get_bit(this->pieceBitboards[SIDE::BLACK][PIECE::PAWN], index)) {
 					result += "p ";
 				}
-				else if (BitboardOperations::get_bit(pieces.pieceBitboards[SIDE::BLACK][PIECE::KNIGHT], index)) {
+				else if (BitboardOperations::get_bit(this->pieceBitboards[SIDE::BLACK][PIECE::KNIGHT], index)) {
 					result += "n ";
 				}
-				else if (BitboardOperations::get_bit(pieces.pieceBitboards[SIDE::BLACK][PIECE::BISHOP], index)) {
+				else if (BitboardOperations::get_bit(this->pieceBitboards[SIDE::BLACK][PIECE::BISHOP], index)) {
 					result += "b ";
 				}
-				else if (BitboardOperations::get_bit(pieces.pieceBitboards[SIDE::BLACK][PIECE::ROOK], index)) {
+				else if (BitboardOperations::get_bit(this->pieceBitboards[SIDE::BLACK][PIECE::ROOK], index)) {
 					result += "r ";
 				}
-				else if (BitboardOperations::get_bit(pieces.pieceBitboards[SIDE::BLACK][PIECE::QUEEN], index)) {
+				else if (BitboardOperations::get_bit(this->pieceBitboards[SIDE::BLACK][PIECE::QUEEN], index)) {
 					result += "q ";
 				}
-				else if (BitboardOperations::get_bit(pieces.pieceBitboards[SIDE::BLACK][PIECE::KING], index)) {
+				else if (BitboardOperations::get_bit(this->pieceBitboards[SIDE::BLACK][PIECE::KING], index)) {
 					result += "k ";
 				}
 			}

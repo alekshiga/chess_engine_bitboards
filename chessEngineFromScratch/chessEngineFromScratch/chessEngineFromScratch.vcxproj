@@ -135,6 +135,7 @@
     <ClInclude Include="Bitboards.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="Position.h" />
+    <ClInclude Include="RepetitionHistory.h" />
     <ClInclude Include="ZobristHash.h" />
     <ClInclude Include="ZobristHashConstants.h" />
   </ItemGroup>
