@@ -4,9 +4,9 @@
 
 #pragma once
 
-namespace KnightMasks {
+namespace KingMasks {
 
-    static constexpr std::array<Bitboard, 64> masks = calculateKnightMasks();
+    static constexpr std::array<Bitboard, 64> masks = calculateKingMasks();
 
     static consteval uint8_t absoluteSubstract(uint8_t left, uint8_t right) {
         if (left >= right) {
@@ -16,7 +16,7 @@ namespace KnightMasks {
             return right - left;
         }
     }
-    static consteval std::array<Bitboard, 64> calculateKnightMasks() {
+    static consteval std::array<Bitboard, 64> calculateKingMasks() {
         std::array<Bitboard, 64> masks{};
         uint8_t x;
         uint8_t y;
@@ -26,7 +26,7 @@ namespace KnightMasks {
                     for (uint8_t y1 = 0; y1 < 8; ++y1) {
                         x = absoluteSubstract(x0, x1);
                         y = absoluteSubstract(y0, y1);
-                        if ((x == 2 and y == 1) or (x == 1 and y == 2)) {
+                        if (x <= 1 and y <= 1) {
                             masks[y0 * 8 + x0] = BitboardOperations::set_1(masks[y0 * 8 + x0], y1 * 8 + x1);
                         }
                     }
