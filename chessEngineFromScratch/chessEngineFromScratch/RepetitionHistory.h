@@ -21,9 +21,8 @@ public:
         this->hashes.clear();
     }
 
-    int getRepetitionNumber(ZobristHash hash) {
+    const int getRepetitionNumber(ZobristHash hash) const {
         int counter = 0;
-
         for (auto hash1 : this->hashes) {
             if (hash == hash1) counter++;
         }

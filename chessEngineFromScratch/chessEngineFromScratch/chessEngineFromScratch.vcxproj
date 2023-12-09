@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClInclude Include="BitboardOperations.h" />
     <ClInclude Include="Bitboards.h" />
+    <ClInclude Include="KnightMask.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="RepetitionHistory.h" />

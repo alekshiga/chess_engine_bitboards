@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы заголовков\Move Generation">
+      <UniqueIdentifier>{a7aa95b7-c625-4979-a54c-cb160c7fa1d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Board Representation">
+      <UniqueIdentifier>{78e92f22-7fcd-49e4-96fc-cbc6fc7b7bad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="chessEngineFromScratch.cpp">
@@ -20,26 +26,29 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bitboards.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="KnightMask.h">
+      <Filter>Файлы заголовков\Move Generation</Filter>
     </ClInclude>
     <ClInclude Include="BitboardOperations.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Board Representation</Filter>
     </ClInclude>
-    <ClInclude Include="Position.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="Bitboards.h">
+      <Filter>Файлы заголовков\Board Representation</Filter>
     </ClInclude>
     <ClInclude Include="Move.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Board Representation</Filter>
     </ClInclude>
-    <ClInclude Include="ZobristHash.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ZobristHashConstants.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="Position.h">
+      <Filter>Файлы заголовков\Board Representation</Filter>
     </ClInclude>
     <ClInclude Include="RepetitionHistory.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Board Representation</Filter>
+    </ClInclude>
+    <ClInclude Include="ZobristHash.h">
+      <Filter>Файлы заголовков\Board Representation</Filter>
+    </ClInclude>
+    <ClInclude Include="ZobristHashConstants.h">
+      <Filter>Файлы заголовков\Board Representation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

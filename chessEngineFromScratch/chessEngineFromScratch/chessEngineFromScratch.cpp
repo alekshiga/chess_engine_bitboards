@@ -5,5 +5,5 @@
 int main()
 {
     Chessboard chessboard = Chessboard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
-    std::cout << chessboard.toString();
+    std::cout << toString(chessboard);
 }

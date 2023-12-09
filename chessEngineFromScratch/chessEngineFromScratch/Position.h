@@ -40,7 +40,7 @@ public:
 
         this->moveCounter = moveCounter;
         this->hash = { this->pieces, this->blackToMove(), this->whiteShortCastling, this->whiteLongCastling, this->blackShortCastling, this->moveCounter};
-        this->repetitionHistory.addPosition(this->hash);
+        this->repetitionHistory.addPosition(this->hash);;
         this->fiftyMovesCounter = 0;
     }
 
@@ -118,15 +118,32 @@ public:
             this->removeWhiteShortCastling();
             this->removeWhiteLongCastling();
             break;
-
         case 0:
             this->removeWhiteLongCastling();
             break;
+        case 7:
+            this->removeWhiteShortCastling();
+            break;
+        case 56:
+            this->removeBlackLongCastling();
+            break;
+        case 60:
+            this->removeBlackLongCastling();
+            this->removeBlackShortCastling();
+            break;
+        case 63:
+            this->removeBlackShortCastling();
+            break;
         }
-        //case
+        this->updateMoveCounter();
+        this->updateFiftyMovesCounter(move.attackerPieceType == PIECE::PAWN or move.attackedPieceType != 255);
+        if (move.attackerPieceType == PIECE::PAWN or move.attackedPieceType != Move::NONE) {
+            this->repetitionHistory.clear();
+        }
+        this->repetitionHistory.addPosition(this->hash);
     }
 
-    //todo move, castling, enPassant, getChessboard, toString()
+    //todo enPassant, getChessboard, toString()
 
     bool whiteToMove() const {
         return !this->blackToMove();
@@ -141,26 +158,23 @@ public:
     }
 
     bool fiftyMovesDraw() const {
-
+        return (this->fiftyMovesCounter == 50);
     }
 
-    /*bool threeRepetitionDraw() const {
-        if (this->repetitionHistory.getRepetitionNumber(this->hash) == 3) {
-            return true;
-        }
-        else return false;
-    }*/
+    bool threeRepetitionDraw() const {
+        return (this->repetitionHistory.getRepetitionNumber(this->hash) == 3);
+    }
 
     void addPiece(uint8_t square, uint8_t type, uint8_t side) {
         if (!BitboardOperations::get_bit(this->pieces.getPieceBitboard(side, type), square)) {
-            this->pieces.setPieceBitboard(side, type, BitboardOperations::set1(this->pieces.getPieceBitboard(side, type), square));
+            this->pieces.setPieceBitboard(side, type, BitboardOperations::set_1(this->pieces.getPieceBitboard(side, type), square));
             this->hash.invertPiece(square, type, side);
         }
     }
 
     void removePiece(uint8_t square, uint8_t type, uint8_t side) {
         if (BitboardOperations::get_bit(this->pieces.getPieceBitboard(side, type), square)) {
-            this->pieces.setPieceBitboard(side, type, BitboardOperations::set0(this->pieces.getPieceBitboard(side, type), square));
+            this->pieces.setPieceBitboard(side, type, BitboardOperations::set_0(this->pieces.getPieceBitboard(side, type), square));
             this->hash.invertPiece(square, type, side);
         }
     }
