@@ -133,10 +133,13 @@
   <ItemGroup>
     <ClInclude Include="BitboardOperations.h" />
     <ClInclude Include="Bitboards.h" />
+    <ClInclude Include="KingMask.h" />
     <ClInclude Include="KnightMask.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="Position.h" />
+    <ClInclude Include="PseudoLegalMoveGen.h" />
     <ClInclude Include="RepetitionHistory.h" />
+    <ClInclude Include="SlidersMask.h" />
     <ClInclude Include="ZobristHash.h" />
     <ClInclude Include="ZobristHashConstants.h" />
   </ItemGroup>

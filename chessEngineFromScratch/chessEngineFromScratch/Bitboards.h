@@ -78,11 +78,9 @@ public:
 					this->pieceBitboards[side][PIECE::KING] = BitboardOperations::set_1(this->pieceBitboards[side][PIECE::KING], y * 8 + x);
 					break;
 				}
-
-				x = x + 1;
+				x++;
 			}
 		}
-
 		this->updateBitboards();
 	}
 

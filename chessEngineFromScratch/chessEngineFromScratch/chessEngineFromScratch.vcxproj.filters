@@ -50,5 +50,14 @@
     <ClInclude Include="ZobristHashConstants.h">
       <Filter>Файлы заголовков\Board Representation</Filter>
     </ClInclude>
+    <ClInclude Include="KingMask.h">
+      <Filter>Файлы заголовков\Move Generation</Filter>
+    </ClInclude>
+    <ClInclude Include="SlidersMask.h">
+      <Filter>Файлы заголовков\Move Generation</Filter>
+    </ClInclude>
+    <ClInclude Include="PseudoLegalMoveGen.h">
+      <Filter>Файлы заголовков\Move Generation</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

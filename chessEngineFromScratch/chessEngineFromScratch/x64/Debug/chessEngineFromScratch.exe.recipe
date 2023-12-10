@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\User\Source\Repos\chess_engine_bitboards\chessEngineFromScratch\x64\Debug\chessEngineFromScratch.exe</FullPath>
+      <FullPath>C:\Users\User\source\repos\chess_engine_bitboards\chessEngineFromScratch\x64\Debug\chessEngineFromScratch.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
