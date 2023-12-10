@@ -11,14 +11,14 @@ namespace SlidersMasks {
     static constexpr std::array<std::array<Bitboard, 8>, 64> masks = calculateSliderMasks();
 
     enum DIRECTION {
-        NORTH,
-        SOUTH,
-        WEST,
-        EAST,
-        NORTH_WEST,
-        NORTH_EAST,
-        SOUTH_WEST,
-        SOUTH_EAST,
+        NORTH = 1,
+        SOUTH = 2,
+        WEST = 3,
+        EAST = 4,
+        NORTH_WEST = 5,
+        NORTH_EAST = 6,
+        SOUTH_WEST = 7,
+        SOUTH_EAST = 8,
     };
 
     static consteval Bitboard calculateMask(uint8_t position, uint8_t direction) {
