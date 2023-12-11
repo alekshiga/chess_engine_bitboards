@@ -71,7 +71,7 @@ namespace BitboardRows {
 		} return rows;
 	}
 
-	static constexpr std::array<Bitboard, 8> rows = BitboardRows::calculateRows();
+	static constexpr std::array<Bitboard, 8> rows = calculateRows();
 
 	static consteval std::array<Bitboard, 8> calculateInvertedRows() {
 		std::array<Bitboard, 8> inversionRows{};
@@ -79,7 +79,7 @@ namespace BitboardRows {
 		return inversionRows;
 	}
 
-	static constexpr std::array<Bitboard, 8> inversionRows = BitboardRows::calculateInvertedRows();
+	static constexpr std::array<Bitboard, 8> inversionRows = calculateInvertedRows();
 }
 
 
@@ -92,12 +92,12 @@ namespace BitboardColumns {
 		} return columns;
 	}
 
-	static constexpr std::array<Bitboard, 8> Columns = BitboardColumns::calculateColumns();
+	static constexpr std::array<Bitboard, 8> columns = BitboardColumns::calculateColumns();
 
 	static consteval std::array<Bitboard, 8> calculateInvertedColumns() {
-		std::array<Bitboard, 8> inversion_columns{};
-		for (uint8_t i = 0; i < 8; i = i + 1) inversion_columns[i] = ~Columns[i];
-		return inversion_columns;
+		std::array<Bitboard, 8> invertedColumns{};
+		for (uint8_t i = 0; i < 8; i = i + 1) invertedColumns[i] = ~Columns[i];
+		return invertedColumns;
 	}
-	static constexpr std::array<Bitboard, 8> InversionColumns = BitboardColumns::calculateInvertedColumns();
+	static constexpr std::array<Bitboard, 8> invertedColumns = BitboardColumns::calculateInvertedColumns();
 }

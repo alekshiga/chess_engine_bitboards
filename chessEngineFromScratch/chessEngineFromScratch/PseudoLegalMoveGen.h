@@ -3,6 +3,7 @@
 #include "KnightMask.h"
 #include "KingMask.h"
 #include "SlidersMask.h"
+#include "BitboardOperations.h"
 
 #pragma once
 
@@ -31,13 +32,13 @@ class PseudoLegalMove {
         return north | south | west | east;
     }
 
-    Bitboard generateQueenMask(Chessboard chessboard, uint8_t position, uint8_t alliance, bool onlyCaptures) {
+    Bitboard calculateQueenMask(Chessboard chessboard, uint8_t position, uint8_t alliance, bool onlyCaptures) {
         Bitboard bishopMask = calculateBishopMask(chessboard, position, alliance, onlyCaptures);
         Bitboard rookMask = calculateRookMask(chessboard, position, alliance, onlyCaptures);
         return bishopMask | rookMask;
     }
 
-    Bitboard generateKingMask(Chessboard chessboard, uint8_t position, uint8_t alliance, bool onlyCaptures) {
+    Bitboard calculateKingMask(Chessboard chessboard, uint8_t position, uint8_t alliance, bool onlyCaptures) {
         if (onlyCaptures) {
             uint8_t oppositeAlliance = chessboard.invert(alliance);
             return KingMasks::masks[position] & chessboard.getSideBitboard(oppositeAlliance);
@@ -45,9 +46,50 @@ class PseudoLegalMove {
         return KingMasks::masks[position] & chessboard.getInvertedSideBitboard(alliance);
     }
 
-    Bitboard calculateAttackBeam(Chessboard Chessboard, uint8_t position, uint8_t alliance, bool onlyCaptures, uint8_t direction, bool bitScanReverse) {
-        Bitboard blockers = SlidersMasks::masks[position][direction] & Chessboard.getAllBitboard();
-        if (blockers == 0) {
+    Bitboard calculatePawnMoveMask(Chessboard chessboard, uint8_t alliance) {
+        if (alliance == SIDE::WHITE) {
+            return (chessboard.pieceBitboards[SIDE::WHITE][PIECE::PAWN] << 8) & chessboard.emptyBoard;
+        }
+        else return (chessboard.pieceBitboards[SIDE::BLACK][PIECE::PAWN] >> 8) & chessboard.emptyBoard;
+    }
+
+    Bitboard calculatePawnJumpMask(Chessboard chessboard, uint8_t alliance) {
+        Bitboard pawnMove = calculatePawnMoveMask(chessboard, alliance);
+        if (alliance == SIDE::WHITE) {
+            return (pawnMove & BitboardRows::rows[2] << 8) & chessboard.emptyBoard;
+        }
+        else return (pawnMove & BitboardRows::rows[5] >> 8) & chessboard.emptyBoard;
+    }
+
+    Bitboard calculateLeftPawnAttackMove(Chessboard chessboard, uint8_t alliance, bool includeAllPossibleCaptures) {
+        if (alliance == SIDE::WHITE) {
+            Bitboard mask = (chessboard.pieceBitboards[SIDE::WHITE][PIECE::PAWN] << 7) & BitboardColumns::invertedColumns[7];
+            if (!includeAllPossibleCaptures) mask = mask & chessboard.sideBitboards[SIDE::BLACK];
+            return mask;
+        }
+        else {
+            Bitboard mask = (chessboard.pieceBitboards[SIDE::BLACK][PIECE::PAWN] >> 9) & BitboardColumns::invertedColumns[7];
+            if (!includeAllPossibleCaptures) mask = mask & chessboard.sideBitboards[SIDE::WHITE];
+            return mask;
+        }
+    }
+
+    Bitboard calculateRightPawnAttackMove(Chessboard chessboard, uint8_t alliance, bool includeAllPossibleCaptures) {
+        if (alliance == SIDE::WHITE) {
+            Bitboard mask = (chessboard.pieceBitboards[SIDE::WHITE][PIECE::PAWN] << 9) & BitboardColumns::invertedColumns[0];
+            if (!includeAllPossibleCaptures) mask = mask & chessboard.sideBitboards[SIDE::BLACK];
+            return mask;
+        }
+        else {
+            Bitboard mask = (chessboard.pieceBitboards[SIDE::BLACK][PIECE::PAWN] >> 7) & BitboardColumns::invertedColumns[0];
+            if (!includeAllPossibleCaptures) mask = mask & chessboard.sideBitboards[SIDE::WHITE];
+            return mask;
+        }
+    }
+
+    Bitboard calculateAttackBeam(Chessboard chessboard, uint8_t position, uint8_t alliance, bool onlyCaptures, uint8_t direction, bool bitScanReverse) {
+        Bitboard blockingPieces = SlidersMasks::masks[position][direction] & chessboard.chessBoard;
+        if (blockingPieces == 0) {
             if (onlyCaptures) {
                 return 0;
             }
@@ -56,10 +98,10 @@ class PseudoLegalMove {
 
         uint8_t blockingSquare;
         if (bitScanReverse) {
-            blockingSquare = BitboardOperations::bitScanReverse(blockers);
+            blockingSquare = BitboardOperations::bitScanReverse(blockingPieces);
         }
         else {
-            blockingSquare = BitboardOperations::bitScanForward(blockers);
+            blockingSquare = BitboardOperations::bitScanForward(blockingPieces);
         }
 
         Bitboard moves;
@@ -67,16 +109,15 @@ class PseudoLegalMove {
             moves = 0;
         }
         else {
-            moves = SlidersMasks::masks[position][direction] ^ SlidersMasks::masks[blockingSquare][direction];
+            moves = SlidersMasks::masks[position][direction] & SlidersMasks::masks[blockingSquare][direction];
         }
 
-        if (BitboardOperations::get_bit(Chessboard.getSideBitboard(alliance), blockingSquare)) {
+        if (BitboardOperations::get_bit(chessboard.getSideBitboard(alliance), blockingSquare)) {
             moves = BitboardOperations::set_0(moves, blockingSquare);
         }
         else {
             moves = BitboardOperations::set_1(moves, blockingSquare);
         }
-
         return moves;
     }
 };
