@@ -59,5 +59,8 @@
     <ClInclude Include="PseudoLegalMoveGen.h">
       <Filter>Файлы заголовков\Move Generation</Filter>
     </ClInclude>
+    <ClInclude Include="MoveList.h">
+      <Filter>Файлы заголовков\Move Generation</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

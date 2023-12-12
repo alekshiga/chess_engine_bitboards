@@ -96,7 +96,7 @@ namespace BitboardColumns {
 
 	static consteval std::array<Bitboard, 8> calculateInvertedColumns() {
 		std::array<Bitboard, 8> invertedColumns{};
-		for (uint8_t i = 0; i < 8; i = i + 1) invertedColumns[i] = ~Columns[i];
+		for (uint8_t i = 0; i < 8; i = i + 1) invertedColumns[i] = ~columns[i];
 		return invertedColumns;
 	}
 	static constexpr std::array<Bitboard, 8> invertedColumns = BitboardColumns::calculateInvertedColumns();

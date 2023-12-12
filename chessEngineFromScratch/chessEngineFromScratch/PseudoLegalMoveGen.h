@@ -61,7 +61,7 @@ class PseudoLegalMove {
         else return (pawnMove & BitboardRows::rows[5] >> 8) & chessboard.emptyBoard;
     }
 
-    Bitboard calculateLeftPawnAttackMove(Chessboard chessboard, uint8_t alliance, bool includeAllPossibleCaptures) {
+    Bitboard calculatePawnLeftAttackMove(Chessboard chessboard, uint8_t alliance, bool includeAllPossibleCaptures) {
         if (alliance == SIDE::WHITE) {
             Bitboard mask = (chessboard.pieceBitboards[SIDE::WHITE][PIECE::PAWN] << 7) & BitboardColumns::invertedColumns[7];
             if (!includeAllPossibleCaptures) mask = mask & chessboard.sideBitboards[SIDE::BLACK];
@@ -74,7 +74,7 @@ class PseudoLegalMove {
         }
     }
 
-    Bitboard calculateRightPawnAttackMove(Chessboard chessboard, uint8_t alliance, bool includeAllPossibleCaptures) {
+    Bitboard calculatePawnRightAttackMove(Chessboard chessboard, uint8_t alliance, bool includeAllPossibleCaptures) {
         if (alliance == SIDE::WHITE) {
             Bitboard mask = (chessboard.pieceBitboards[SIDE::WHITE][PIECE::PAWN] << 9) & BitboardColumns::invertedColumns[0];
             if (!includeAllPossibleCaptures) mask = mask & chessboard.sideBitboards[SIDE::BLACK];
@@ -88,7 +88,7 @@ class PseudoLegalMove {
     }
 
     Bitboard calculateAttackBeam(Chessboard chessboard, uint8_t position, uint8_t alliance, bool onlyCaptures, uint8_t direction, bool bitScanReverse) {
-        Bitboard blockingPieces = SlidersMasks::masks[position][direction] & chessboard.chessBoard;
+        Bitboard blockingPieces = SlidersMasks::masks[position][direction] ^ chessboard.chessBoard;
         if (blockingPieces == 0) {
             if (onlyCaptures) {
                 return 0;
@@ -119,5 +119,27 @@ class PseudoLegalMove {
             moves = BitboardOperations::set_1(moves, blockingSquare);
         }
         return moves;
+    }
+
+    bool isUnderAttack(Chessboard chessboard, uint8_t position, uint8_t alliance) {;
+
+    uint8_t oppositeAlliance = chessboard.invert(alliance);
+
+        Bitboard pawnsLeftAttacks = calculatePawnLeftAttackMove(chessboard, oppositeAlliance, true);
+        Bitboard pawnRightAttacks = calculatePawnRightAttackMove(chessboard, oppositeAlliance, true);
+        Bitboard pawnAttackMoves = pawnsLeftAttacks | pawnRightAttacks;
+
+        if (BitboardOperations::get_bit(pawnAttackMoves, position)) return true;
+        if (calculateBishopMask(chessboard, position, alliance, true) &
+            chessboard.getPieceBitboard(oppositeAlliance, PIECE::BISHOP)) return true;
+        if (calculateKnightMask(chessboard, position, alliance, true) &
+            chessboard.getPieceBitboard(oppositeAlliance, PIECE::KNIGHT)) return true;
+        if (calculateRookMask(chessboard, position, alliance, true) &
+            chessboard.getPieceBitboard(oppositeAlliance, PIECE::ROOK)) return true;
+        if (calculateQueenMask(chessboard, position, alliance, true) &
+            chessboard.getPieceBitboard(oppositeAlliance, PIECE::QUEEN)) return true;
+        if (calculateKingMask(chessboard, position, alliance, true) &
+            chessboard.getPieceBitboard(oppositeAlliance, PIECE::KING)) return true;
+        return false;
     }
 };
