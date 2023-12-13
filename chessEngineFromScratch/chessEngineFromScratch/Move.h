@@ -21,7 +21,7 @@ public:
         uint8_t attackingPieceAlliance,
         uint8_t attackedPieceType,
         uint8_t attackedPieceAlliance,
-        uint8_t flag) 
+        uint8_t flag = regular)
     {
         this->startPosition = startPosition;
         this->destinationCoordinate = destinationCoordinate;

@@ -143,8 +143,29 @@ public:
         this->repetitionHistory.addPosition(this->hash);
     }
 
-    //todo enPassant, getChessboard, toString()
+    Chessboard getPieces() const {
+        return this->pieces;
+    }
+    uint8_t getEnPassant() const {
+        return this->enPassant;
+    }
+    
+    bool getWhiteShortCastling() const {
+        return this->whiteShortCastling;
+    }
 
+    bool getWhiteLongCastling() const {
+        return this->whiteLongCastling;
+    }
+ 
+    bool getBlackShortCastling() const {
+        return this->blackShortCastling;
+    }
+
+    bool getBlackLongCastling() const {
+        return this->blackLongCastling;
+    }
+ 
     bool whiteToMove() const {
         return !this->blackToMove();
     }

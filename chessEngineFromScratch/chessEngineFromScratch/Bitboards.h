@@ -183,7 +183,7 @@ public:
 		return this->emptyBoard;
 	}
 
-	uint8_t invert(uint8_t alliance) {
+	static uint8_t invert(uint8_t alliance) {
 		return !alliance;
 	}
 };
