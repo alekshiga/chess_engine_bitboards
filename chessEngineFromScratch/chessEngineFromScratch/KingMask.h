@@ -6,8 +6,6 @@
 
 namespace KingMasks {
 
-    static constexpr std::array<Bitboard, 64> masks = calculateKingMasks();
-
     static consteval uint8_t absoluteSubstract(uint8_t left, uint8_t right) {
         if (left >= right) {
             return left - right;
@@ -35,4 +33,6 @@ namespace KingMasks {
         }
         return masks;
     }
+
+    static constexpr std::array<Bitboard, 64> masks = calculateKingMasks();
 }

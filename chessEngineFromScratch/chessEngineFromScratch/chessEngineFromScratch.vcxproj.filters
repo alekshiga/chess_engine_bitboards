@@ -65,5 +65,8 @@
     <ClInclude Include="LegalMoveGen.h">
       <Filter>Файлы заголовков\Move Generation</Filter>
     </ClInclude>
+    <ClInclude Include="MoveCalculationTest.h">
+      <Filter>Файлы заголовков\Move Generation</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

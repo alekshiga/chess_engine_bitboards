@@ -143,7 +143,7 @@ public:
         this->repetitionHistory.addPosition(this->hash);
     }
 
-    Chessboard getPieces() const {
+    Chessboard getBoard() const {
         return this->pieces;
     }
     uint8_t getEnPassant() const {
